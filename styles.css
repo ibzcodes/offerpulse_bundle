@@ -1,0 +1,102 @@
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(to bottom, #0f172a, #1e293b);
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+header {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #0f172a;
+}
+.logo-pulse-glow {
+  width: 380px;
+  display: inline-block;
+  animation: pulseScale 2.5s ease-in-out infinite, neonGlow 3s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 6px #38bdf8)
+    drop-shadow(0 0 10px #38bdf8)
+    drop-shadow(0 0 20px #0ea5e9);
+}
+.cta-buttons {
+  margin-top: 2rem;
+}
+.cta-buttons a {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0.6rem;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+}
+.cta-buttons a:hover {
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+}
+section {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #38bdf8;
+  text-align: center;
+}
+.features, .steps, .pricing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.feature, .step, .plan {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid #334155;
+  transition: 0.3s;
+  flex: 1 1 280px;
+  max-width: 380px;
+  text-align: center;
+}
+.feature:hover, .step:hover, .plan:hover {
+  border-color: #38bdf8;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+}
+.plan h3 {
+  margin-top: 0;
+  color: #38bdf8;
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  background-color: #0f172a;
+  color: #94a3b8;
+}
+@keyframes pulseScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes neonGlow {
+  0% { filter: drop-shadow(0 0 4px #38bdf8); }
+  50% { filter: drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 20px #0ea5e9); }
+  100% { filter: drop-shadow(0 0 4px #38bdf8); }
+}

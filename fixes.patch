@@ -1,0 +1,15 @@
+diff --git src/components/NotificationInit.jsx src/components/NotificationInit.jsx
+index p1q2r3s..t4u5v6w 100644
+--- src/components/NotificationInit.jsx
++++ src/components/NotificationInit.jsx
+@@ sdk.onload = () => {
+          await OneSignal.init({
+            appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
+            allowLocalhostAsSecureOrigin: true,
+            welcomeNotification: { disable: true }
+          });
++         // trigger the opt-in prompt
++         OneSignal.showSlidedownPrompt();
+        } catch (error) {
+          console.error("🔥 OneSignal Init Error:", error);
+        }

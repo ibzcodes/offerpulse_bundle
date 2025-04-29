@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+import { auth } from '../firebase/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { loadStripe } from '@stripe/stripe-js';
+import { Link } from 'react-router-dom';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+
+export default function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [plan, setPlan] = useState('STARTER');
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const res = await fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId: import.meta.env[`VITE_PRICE_ID_${plan}`] })
+      });
+      const { sessionId } = await res.json();
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+      if (error) console.error(error);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white px-4">
+      <form onSubmit={handleSignup} className="w-full max-w-md space-y-4">
+        <h2 className="text-2xl font-bold">Sign Up</h2>
+        <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="w-full p-3 rounded-lg text-black" required />
+        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="w-full p-3 rounded-lg text-black" required />
+        <select value={plan} onChange={e => setPlan(e.target.value)} className="w-full p-3 rounded-lg text-black">
+          <option value="STARTER">Starter - £49/month</option>
+          <option value="PRO">Pro - £99/month</option>
+        </select>
+        <button type="submit" className="w-full bg-primary py-3 rounded-lg font-semibold hover:bg-primary-hover">Subscribe & Continue</button>
+        <p className="text-center text-sm text-gray-300">
+          Already have an account? <Link to="/login" className="underline">Login</Link>
+        </p>
+      </form>
+    </div>
+  );
+}
